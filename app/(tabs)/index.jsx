@@ -30,7 +30,7 @@ const Santoandre = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.saldoContainer}>
         <Text style={styles.label}>Saldo Atual</Text>
         <Text style={styles.valor}>R$ {saldo.toFixed(2)}</Text>
@@ -44,7 +44,7 @@ const Santoandre = () => {
           <Text style={styles.buttonText}>Sacar</Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
