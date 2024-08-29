@@ -1,71 +1,78 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Button, StyleSheet, FlatList, TouchableOpacity, Alert } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, TextInput, Pressable, StyleSheet, SafeAreaView } from 'react-native';
 
+const Santoandre = () => {
+  
+  const [saldo, setSaldo] = useState(7320.92);
+  const [valor, setValor] = useState('');
+
+  const deposito = () => {
+    const valorNumerico = parseFloat(valor);
+    if (!isNaN(valorNumerico) && valorNumerico > 0) {
+      const novoSaldo = saldo + valorNumerico + valorNumerico * 0.01; 
+      setSaldo(novoSaldo);
+      setValor('');
+    }
+  };
+
+  const sacar = () => {
+    const valorNumerico = parseFloat(valor);
+    if (!isNaN(valorNumerico) && valorNumerico > 0) {
+      const taxa = saldo * 0.025; 
+      const novoSaldo = saldo - valorNumerico - taxa;
+      if (novoSaldo >= 0) {
+        setSaldo(novoSaldo);
+        setValor(''); 
+      } else {
+        alert('Ta pobre?');
+      }
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.saldoContainer}>
+        <Text style={styles.label}>Saldo Atual</Text>
+        <Text style={styles.valor}>R$ {saldo.toFixed(2)}</Text>
+      </View>
+      <View style={styles.formContainer}>
+        <TextInput style={styles.input} keyboardType="numeric" placeholder="Valor" value={valor} onChangeText={setValor}/>
+        <Pressable style={styles.button} onPress={deposito}>
+          <Text style={styles.buttonText}>Depositar</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={sacar}>
+          <Text style={styles.buttonText}>Sacar</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-    },
-    Tarefa: {
-        padding: 15,
-        fontSize: 20,
-    },
-    Opacidade: {
-        backgroundColor: 'pink',
-        margin: 10,
-        borderRadius: 2,
-    },
-    input: {
-        flex: 1,
-        borderColor: 'gray',
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 5,
-        marginRight: 10,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 40,
-    },
-    traco: {
-        textDecorationLine: 'line-through',
-        color: 'white',
-    }
+  container: {
+   
+  },
+  valorContainer: {
+    
+  },
+  label: {
+    
+  },
+  valor: {
+    
+  },
+  formContainer: {
+   
+  },
+  input: {
+  
+  },
+  button: {
+   
+  },
+  buttonText: {
+    
+  },
 });
 
-
-const Tarefas = [
-    { id: 1, descricao: 'Ir para academia', feito: false, dataCriacao: new Date() },
-    { id: 2, descricao: 'Ir para a escola', feito: false, dataCriacao: new Date() },
-    { id: 3, descricao: 'Ir para o trabalho', feito: false, dataCriacao: new Date() },
-    { id: 4, descricao: 'Jogar', feito: false, dataCriacao: new Date() },
-];
-
-
-export default function Lista() {
-    const [novaTarefa, setNovaTarefa] = useState('');
-    const [tarefas, setTarefas] = useState(Tarefas);
-
-
-    const Feito = (id) => {
-        setTarefas(tarefas.map(tarefa =>
-            tarefa.id === id ? { ...tarefa, feito: !tarefa.feito } : tarefa
-        ));
-    };
-
-
-    const Adicionar = () => {
-        if (novaTarefa.trim()) {
-            const nova = {
-                id: tarefas.length + 1,
-                descricao: novaTarefa,
-                feito: false,
-                dataCriacao: new Date(),
-            };
-            setTarefas([...tarefas, nova]);
-            setNovaTarefa('');
-        } else {
-            Alert.alert('Erro', 'A descrição da tarefa não pode estar vazia.');
-        }
-    };
+export default Santoandre;
